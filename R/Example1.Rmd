@@ -23,7 +23,7 @@ library(knitr)
 
 ## Set working directory
 ```{r setup, include=F, cache = F}
-opts_knit$set(root.dir = "~/Dropbox/Bahar_Job/Example_viz/")
+opts_knit$set(root.dir = "~/Documents/Projects/work_sample/")
 ```
 
 ## Read data
