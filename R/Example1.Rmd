@@ -7,8 +7,9 @@ output:
     df_print: paged
 ---
 
-This script investigates ecological diversity in human microbiome
-Publicly available data of Human Microbiome Project are used in this exercise 
+This script investigates ecological diversity in human microbiome.
+
+Publicly available data of Human Microbiome Project are used in this exercise. 
 
 **Reference**: Lloyd-Price, J., Mahurkar, A., Rahnavard, G. et al. Strains, functions and dynamics in the expanded Human Microbiome Project. Nature 550, 61–66 (2017). https://doi.org/10.1038/nature23889
 
@@ -27,7 +28,7 @@ opts_knit$set(root.dir = "~/Documents/Projects/work_sample/")
 ```
 
 ## Read data
-### Load sample_info, a tab-delimited file
+### Load sample info, a tab-delimited file
 ### Load microbial species abundances, , a tab-delimited file
 
 ```{r}
@@ -48,7 +49,7 @@ write.table( veg_dist, 'data/bray_disatnce.txt', sep = "\t", eol = "\n",
              na = "", col.names = NA, quote= F, row.names = T)
 ```
 # Ecological diversity
-## Create a data fram to hold statistics
+## Create a data frame to hold statistics
 ```{r}
 diversity_data <-
   setNames(data.frame(matrix(
@@ -66,7 +67,7 @@ diversity_data$Body_area <- sample_info[rownames(Microbial_Species), "Body_area"
 ```
 
 # Kruska Wallis test 
-## if microbial alpha diversity is different among human body areas
+## Test hypothesis: microbial alpha diversity is different among human body areas
 ```{r}
 res_kruskal.test <- kruskal.test(diversity_data$Alpha_diversity, sample_info$Body_area)
 pvalue <- res_kruskal.test$p.value
