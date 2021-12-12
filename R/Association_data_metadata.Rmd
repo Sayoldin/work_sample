@@ -1,0 +1,55 @@
+---
+  title: "Ecological dioversity of human microbiome"
+author: "Bahar Sayoldin, bahar.sayoldin@gmail.com"
+output:
+  pdf_document: default
+html_document:
+  df_print: paged
+---
+install.packages('devtools')
+library(devtools)
+devtools::install_github("bioBakery/Maaslin2")
+
+## Load libraries
+```{r}
+library(vegan)
+library(ggplot2)
+library(ape)
+library(rmarkdown)
+library(knitr)
+library(Maaslin2)
+```
+
+
+## Set working directory
+```{r setup, include=F, cache = F}
+opts_knit$set(root.dir = "~/Documents/Projects/work_sample/")
+```
+
+## Read data
+### Load sample info, a tab-delimited file
+### Load microbial species abundances, , a tab-delimited file
+
+```{r}
+sample_info <- read.delim('data/metadata.txt', sep = "\t", row.names = 1)
+Microbial_Species <- read.delim('data/Microbial_Species.txt', sep = "\t", row.names = 1)
+# rename species from metaphlan2 output
+species <- Microbial_Species[,grepl("\\.s__[^\\|]+$", colnames(Microbial_Species))]
+colnames(species) <- gsub("_", " ", gsub(
+"^((.*\\|)?\\w__(.*\\.\\w__)?)|^.*\\||^.*; ", "", colnames(species)))
+dim(sample_info)
+dim(Microbial_Species)
+```
+
+## Calculate similarity between samples based on microbial species abundance
+```{r}
+sub_sample_info <- sample_info[, c("Body_area", "Gender")]
+Maaslin2::Maaslin2(species, 
+                           sub_sample_info, 
+                           'analysis/Maaslin2_output',
+                           reference='Body_area,Gut'
+)
+#dev.off()
+```
+
+
